@@ -58,31 +58,50 @@ public class Controller extends HttpServlet {
         op = request.getParameter("op");
         
         if (op.equals("inicio")) {
+            String idjornada = (String) request.getParameter("idjornada");
             String nombre = (String) request.getParameter("nombre");
-            sql = "select idjoranda, nombre from Jornada";
+            String fechainicio = (String) request.getParameter("fechainicio");
+            String fechafin = (String) request.getParameter("fechafin");
+            
+            sql = "SELECT j FROM Jornada j WHERE j.idjornada = :idjornada";
             query = em.createQuery(sql);
-            lhl = query.getResultList();
-            session.setAttribute("lhl", lhl);
-
-            sql = "from Jornada";
-            query = em.createQuery(sql);
-            lh = query.getResultList();
-            session.setAttribute("lh", lh);
-            session.setAttribute("local", "visitante");
+            query.setParameter(1,nombre);
+            query.setParameter(2,fechainicio);
+            query.setParameter(3,fechafin);
+            List todasLasJornadas = query.getResultList();
+            fechainicio = fechainicio.replace("/", "-");
+            fechafin = fechafin.replace("/", "-");
+            
+//            Jornada jornada = new Jornada();
+//            jornada.setNombre(nombre);
+//            jornada.setFechainicio(fechafin);
+//            jornada.setFechafin(fechafin);
+//            em.persist(jornada);
+            
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
         }else if(op.equals("jornadas")){
-            String idjornada = (String) request.getParameter("idjornada");
-            sql = "from Partido where idjornada=?";
+            String hora = (String) request.getParameter("hora");
+            String escudo = (String) request.getParameter("escudo");
+            String local = (String) request.getParameter("local");
+            String visitante = (String) request.getParameter("visitante");
+            String goleslocal = (String) request.getParameter("goleslocal");
+            String golesvisitante = (String) request.getParameter("golesvisitante");
+            hora = hora.replace("/", "-");
+            
+            sql = "SELECT p FROM Partido p WHERE p.fecha = :fecha";
             query = em.createQuery(sql);
-            query.setString();
-            List lr = query.getResultList();
-            request.setAttribute("lr", lr);
+            query.setParameter(1,escudo);
+            query.setParameter(2,local);
+            query.setParameter(3,goleslocal);
+            query.setParameter(4,golesvisitante);
+            query.setParameter(5,visitante);
+            List todosLosPartidos = query.getResultList();
+            
             dispatcher = request.getRequestDispatcher("jornadas.jsp");
             dispatcher.forward(request, response);
-        }
-        
+        }       
         
         if (op.equals("login")) {
             String nombre = (String) request.getParameter("nombre");
