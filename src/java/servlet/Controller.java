@@ -72,6 +72,7 @@ public class Controller extends HttpServlet {
             if (userslogin.isEmpty()){
                 Usuario usuario = new Usuario(dni);
                 usuario.setNombre(nombre);
+                em.persist(usuario);
                 
             } else {
                 
