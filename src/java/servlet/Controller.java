@@ -61,9 +61,9 @@ public class Controller extends HttpServlet {
             String nombre = request.getParameter("nombre");
             String dni = request.getParameter("dni");
             
-            
-            
-            
+            sql = "from Usuario where ocupada=false";
+            query = em.createQuery(sql);
+             
         }
     }
 
