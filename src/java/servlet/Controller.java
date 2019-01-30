@@ -5,8 +5,10 @@
  */
 package servlet;
 
+import entities.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
@@ -58,11 +60,22 @@ public class Controller extends HttpServlet {
         
         
         if (op.equals("login")) {
-            String nombre = request.getParameter("nombre");
-            String dni = request.getParameter("dni");
+            String nombre = (String) request.getParameter("nombre");
+            String dni = (String) request.getParameter("dni");
             
-            sql = "from Usuario where ocupada=false";
+            sql = "select u from Usuario u where u.nombre=? and u.dni=?";
             query = em.createQuery(sql);
+            query.setParameter(1, nombre);
+            query.setParameter(2, dni); 
+            List userslogin = query.getResultList();
+            
+            if (userslogin.size() == 0){
+                Usuario usuario = new Usuario(dni);
+                usuario.setNombre(nombre);
+                
+            } else {
+                
+            }
              
         }
     }
