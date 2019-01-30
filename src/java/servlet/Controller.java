@@ -93,11 +93,21 @@ public class Controller extends HttpServlet {
                 Usuario usuario = new Usuario(dni);
                 usuario.setNombre(nombre);
                 em.persist(usuario);
-                
+                logeado = true;
             } else {
-                
+                logeado = true;
             }
-             
+            
+            session.setAttribute("islogueado", logeado);
+            session.setAttribute("nombreuser", nombre); 
+            dispatcher = request.getRequestDispatcher("home.jsp");
+            dispatcher.forward(request, response);
+            
+        } else if (op.equals("logout")){
+            logeado = false;
+            session.setAttribute("islogueado", logeado);
+            dispatcher = request.getRequestDispatcher("home.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
