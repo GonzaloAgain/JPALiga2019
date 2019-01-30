@@ -61,12 +61,12 @@ public class Controller extends HttpServlet {
             String nombre = (String) request.getParameter("nombre");
             sql = "select idjoranda, nombre from Jornada";
             query = em.createQuery(sql);
-            lhl = query.list();
+            lhl = query.getResultList();
             session.setAttribute("lhl", lhl);
 
             sql = "from Jornada";
             query = em.createQuery(sql);
-            lh = query.list();
+            lh = query.getResultList();
             session.setAttribute("lh", lh);
             session.setAttribute("local", "visitante");
             dispatcher = request.getRequestDispatcher("home.jsp");
@@ -77,7 +77,7 @@ public class Controller extends HttpServlet {
             sql = "from Partido where idjornada=?";
             query = em.createQuery(sql);
             query.setString();
-            List lr = query.list();
+            List lr = query.getResultList();
             request.setAttribute("lr", lr);
             dispatcher = request.getRequestDispatcher("jornadas.jsp");
             dispatcher.forward(request, response);
@@ -86,15 +86,10 @@ public class Controller extends HttpServlet {
         
         if (op.equals("login")) {
             String nombre = (String) request.getParameter("nombre");
-            String dni = (String) request.getParameter("dni");
+            String dni = (String) request.getParameter("dni"); 
+            Usuario user = (Usuario) em.find(Usuario.class, dni);
             
-            sql = "select u from Usuario u where u.nombre=? and u.dni=?";
-            query = em.createQuery(sql);
-            query.setParameter(1, nombre);
-            query.setParameter(2, dni); 
-            List userslogin = query.getResultList();
-            
-            if (userslogin.isEmpty()){
+            if (user == null){
                 Usuario usuario = new Usuario(dni);
                 usuario.setNombre(nombre);
                 em.persist(usuario);
