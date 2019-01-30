@@ -44,6 +44,9 @@ public class Controller extends HttpServlet {
         
         String op;
         String sql;
+        List lhl;
+        List lh;
+        Boolean logeado = false;
         Query query;
         EntityManager em = null;
         
@@ -55,7 +58,29 @@ public class Controller extends HttpServlet {
         op = request.getParameter("op");
         
         if (op.equals("inicio")) {
+            String nombre = (String) request.getParameter("nombre");
+            sql = "select idjoranda, nombre from Jornada";
+            query = em.createQuery(sql);
+            lhl = query.list();
+            session.setAttribute("lhl", lhl);
 
+            sql = "from Jornada";
+            query = em.createQuery(sql);
+            lh = query.list();
+            session.setAttribute("lh", lh);
+            session.setAttribute("local", "visitante");
+            dispatcher = request.getRequestDispatcher("home.jsp");
+            dispatcher.forward(request, response);
+            
+        }else if(op.equals("jornadas")){
+            String idjornada = (String) request.getParameter("idjornada");
+            sql = "from Partido where idjornada=?";
+            query = em.createQuery(sql);
+            query.setString();
+            List lr = query.list();
+            request.setAttribute("lr", lr);
+            dispatcher = request.getRequestDispatcher("jornadas.jsp");
+            dispatcher.forward(request, response);
         }
         
         
