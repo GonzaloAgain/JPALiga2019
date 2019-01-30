@@ -69,7 +69,7 @@ public class Controller extends HttpServlet {
             query.setParameter(2, dni); 
             List userslogin = query.getResultList();
             
-            if (userslogin.size() == 0){
+            if (userslogin.isEmpty()){
                 Usuario usuario = new Usuario(dni);
                 usuario.setNombre(nombre);
                 
