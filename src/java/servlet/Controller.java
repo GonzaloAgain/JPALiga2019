@@ -55,6 +55,14 @@ public class Controller extends HttpServlet {
         if (op.equals("inicio")) {
 
         }
+        
+        
+        if (op.equals("login")) {
+            String nombre = request.getParameter("nombre");
+            String dni = request.getParameter("dni");
+            
+            
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
