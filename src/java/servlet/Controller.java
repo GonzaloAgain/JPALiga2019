@@ -108,6 +108,8 @@ public class Controller extends HttpServlet {
             session.setAttribute("islogueado", logeado);
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
+        } else if (op.equals("apostar")){
+            
         }
     }
 
