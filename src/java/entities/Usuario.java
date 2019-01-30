@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,7 +40,7 @@ public class Usuario implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<Porra> porraCollection;
+    private List<Porra> porraCollection;
 
     public Usuario() {
     }
@@ -66,11 +66,11 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Porra> getPorraCollection() {
+    public List<Porra> getPorraCollection() {
         return porraCollection;
     }
 
-    public void setPorraCollection(Collection<Porra> porraCollection) {
+    public void setPorraCollection(List<Porra> porraCollection) {
         this.porraCollection = porraCollection;
     }
 

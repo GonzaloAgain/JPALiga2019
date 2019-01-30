@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -60,7 +60,7 @@ public class Partido implements Serializable {
     @ManyToOne
     private Jornada idjornada;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "partido")
-    private Collection<Porra> porraCollection;
+    private List<Porra> porraCollection;
 
     public Partido() {
     }
@@ -134,11 +134,11 @@ public class Partido implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Porra> getPorraCollection() {
+    public List<Porra> getPorraCollection() {
         return porraCollection;
     }
 
-    public void setPorraCollection(Collection<Porra> porraCollection) {
+    public void setPorraCollection(List<Porra> porraCollection) {
         this.porraCollection = porraCollection;
     }
 
