@@ -42,9 +42,9 @@ public class Equipo implements Serializable {
     @Column(name = "ESCUDO")
     private String escudo;
     @OneToMany(mappedBy = "local")
-    private List<Partido> partidoCollection;
+    private List<Partido> partidoList;
     @OneToMany(mappedBy = "visitante")
-    private List<Partido> partidoCollection1;
+    private List<Partido> partidoList1;
 
     public Equipo() {
     }
@@ -78,21 +78,21 @@ public class Equipo implements Serializable {
     }
 
     @XmlTransient
-    public List<Partido> getPartidoCollection() {
-        return partidoCollection;
+    public List<Partido> getPartidoList() {
+        return partidoList;
     }
 
-    public void setPartidoCollection(List<Partido> partidoCollection) {
-        this.partidoCollection = partidoCollection;
+    public void setPartidoList(List<Partido> partidoList) {
+        this.partidoList = partidoList;
     }
 
     @XmlTransient
-    public List<Partido> getPartidoCollection1() {
-        return partidoCollection1;
+    public List<Partido> getPartidoList1() {
+        return partidoList1;
     }
 
-    public void setPartidoCollection1(List<Partido> partidoCollection1) {
-        this.partidoCollection1 = partidoCollection1;
+    public void setPartidoList1(List<Partido> partidoList) {
+        this.partidoList1 = partidoList1;
     }
 
     @Override

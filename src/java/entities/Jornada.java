@@ -45,7 +45,7 @@ public class Jornada implements Serializable {
     @Column(name = "FECHAFIN")
     private String fechafin;
     @OneToMany(mappedBy = "idjornada")
-    private List<Partido> partidoCollection;
+    private List<Partido> partidoList;
 
     public Jornada() {
     }
@@ -87,12 +87,12 @@ public class Jornada implements Serializable {
     }
 
     @XmlTransient
-    public List<Partido> getPartidoCollection() {
-        return partidoCollection;
+    public List<Partido> getPartidoList() {
+        return partidoList;
     }
 
-    public void setPartidoCollection(List<Partido> partidoCollection) {
-        this.partidoCollection = partidoCollection;
+    public void setPartidoList(List<Partido> partidoList) {
+        this.partidoList = partidoList;
     }
 
     @Override

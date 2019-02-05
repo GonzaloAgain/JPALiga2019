@@ -60,7 +60,7 @@ public class Partido implements Serializable {
     @ManyToOne
     private Jornada idjornada;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "partido")
-    private List<Porra> porraCollection;
+    private List<Porra> porraList;
 
     public Partido() {
     }
@@ -134,12 +134,12 @@ public class Partido implements Serializable {
     }
 
     @XmlTransient
-    public List<Porra> getPorraCollection() {
-        return porraCollection;
+    public List<Porra> getPorraList() {
+        return porraList;
     }
 
-    public void setPorraCollection(List<Porra> porraCollection) {
-        this.porraCollection = porraCollection;
+    public void setPorraList(List<Porra> porraList) {
+        this.porraList = porraList;
     }
 
     @Override

@@ -40,7 +40,7 @@ public class Usuario implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Porra> porraCollection;
+    private List<Porra> porraList;
 
     public Usuario() {
     }
@@ -66,12 +66,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Porra> getPorraCollection() {
-        return porraCollection;
+    public List<Porra> getPorraList() {
+        return porraList;
     }
 
-    public void setPorraCollection(List<Porra> porraCollection) {
-        this.porraCollection = porraCollection;
+    public void setPorraList(List<Porra> porraList) {
+        this.porraList = porraList;
     }
 
     @Override
