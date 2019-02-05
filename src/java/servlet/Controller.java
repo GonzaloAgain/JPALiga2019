@@ -45,7 +45,6 @@ public class Controller extends HttpServlet {
         
         String op;
         String sql;
-        Boolean logeado = false;
         Query query;
         EntityManager em = null;
         
