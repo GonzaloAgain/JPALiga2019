@@ -91,13 +91,15 @@ public class Controller extends HttpServlet {
             String dni = (String) request.getParameter("dni"); 
             Usuario user = em.find(Usuario.class, dni);
             
+            Usuario usuario = null;
+            
             if (user == null){
-                Usuario usuario = new Usuario(dni);
+                usuario = new Usuario(dni);
                 usuario.setNombre(nombre);
                 em.persist(usuario);
             }
             
-            session.setAttribute("usuario", user); 
+            session.setAttribute("usuario", usuario);
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
