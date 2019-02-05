@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import entities.Jornada;
 import entities.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,8 +45,6 @@ public class Controller extends HttpServlet {
         
         String op;
         String sql;
-        List lhl;
-        List lh;
         Boolean logeado = false;
         Query query;
         EntityManager em = null;
@@ -58,25 +57,10 @@ public class Controller extends HttpServlet {
         op = request.getParameter("op");
         
         if (op.equals("inicio")) {
-            String idjornada = (String) request.getParameter("idjornada");
-            String nombre = (String) request.getParameter("nombre");
-            String fechainicio = (String) request.getParameter("fechainicio");
-            String fechafin = (String) request.getParameter("fechafin");
-            
-            sql = "SELECT j FROM Jornada j WHERE j.idjornada = :idjornada";
+            sql = "select j from jornada j";
             query = em.createQuery(sql);
-            query.setParameter(1,nombre);
-            query.setParameter(2,fechainicio);
-            query.setParameter(3,fechafin);
-            List todasLasJornadas = query.getResultList();
-            fechainicio = fechainicio.replace("/", "-");
-            fechafin = fechafin.replace("/", "-");
-            
-//            Jornada jornada = new Jornada();
-//            jornada.setNombre(nombre);
-//            jornada.setFechainicio(fechafin);
-//            jornada.setFechafin(fechafin);
-//            em.persist(jornada);
+            List jornadas = query.getResultList();
+            session.setAttribute("jornadas",jornadas);
             
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
