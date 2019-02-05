@@ -15,30 +15,30 @@
     <body>
         <!-- Modal Trigger -->
         <button data-target="modal-login" class="btn modal-trigger">Login</button>
-        <button data-target="modal-listaApuestas" class="btn modal-trigger">Lista Apuestas</button>
-        <button data-target="modal-apostar" class="btn modal-trigger">Apostar</button>
+        <button data-target="modal-listaApuestas" data-id="IdPartido" class="btn modal-trigger">Lista Apuestas</button>
+        <button data-target="modal-apostar" data-id="IdPartido" data-whatever="Local-Visitante" class="btn modal-trigger">Apostar</button>
 
         <!-- Modal Login -->
         <div id="modal-login" class="modal">
-            <div class="modal-content">
-                <h4>Login & Register</h4>
-                <form>
-                  <div class="row">
-                    <div class="input-field col m12">
-                      <input id="dni" type="text" class="validate">
-                      <label for="dni" class="blue-text text-lighten-3">DNI</label>
+            <form action="Controller?op=login">
+                <div class="modal-content">
+                    <h4>Login & Register</h4>
+                    <div class="row">
+                      <div class="input-field col m12">
+                        <input id="dni" name="id" type="text" class="validate">
+                        <label for="dni" class="blue-text text-lighten-3">DNI</label>
+                      </div>
+                      <div class="input-field col m12">
+                        <input id="nombre" name="nombre" type="tel" class="validate">
+                        <label for="nombre" class="blue-text text-lighten-3">Nombre</label>
+                      </div>
                     </div>
-                    <div class="input-field col m12">
-                      <input id="nombre" type="tel" class="validate">
-                      <label for="nombre" class="blue-text text-lighten-3">Nombre</label>
-                    </div>
-                  </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <a class="waves-effect waves-light btn"><i class="material-icons left">person</i>Login & Register</a>
-                <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancelar</a>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="waves-effect waves-light btn"><i class="material-icons left">person</i>Login & Register</a>
+                    <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancelar</a>
+                </div>
+            </form>
         </div>
 
         <!-- Modal Lista Apuestas -->
@@ -46,7 +46,7 @@
           <div class="modal-content center">
               <h4 class="blue lighten-2" id="tituloApuestas">Información apuestas actuales</h4>
               <div id="div-apuestas">
-                  <p>Partido</p>
+                  <!--Se rellena con ajax-->
               </div>
           </div>
           <div class="modal-footer">
@@ -56,26 +56,29 @@
 
         <!-- Modal Apostar -->
         <div id="modal-apostar" class="modal">
-            <div class="modal-content">
-                <h4>Apuesta</h4>
-                <h5 id="partido" class="center">Partido</h5>
-                <form>
-                  <div class="row">
-                    <div class="input-field col m6">
-                      <input id="gLocal" type="text" class="validate">
-                      <label for="gLocal" class="blue-text text-lighten-3">Goles Local</label>
+            <form action="Controller?op=apostar" method="post">
+                <div class="modal-content">
+                    <h4>Apuesta</h4>
+                    <h5 id="partido" class="center">Partido</h5>
+                    <div class="row">
+                      <div class="input-field col m6">
+                          <input id="gLocal" type="text" name="gLocal" class="validate">
+                          <label for="gLocal" class="blue-text text-lighten-3">Goles Local</label>
+                      </div>
+                      <div class="input-field col m6">
+                          <input id="gVisitante" type="text" name="gVisitante" class="validate">
+                          <label for="gVisitante" class="blue-text text-lighten-3">Goles Visitante</label>
+                      </div>
+                      <div>
+                          <input type="hidden" id="idPartido" name="idPartido">
+                      </div>
                     </div>
-                    <div class="input-field col m6">
-                      <input id="gVisitante" type="tel" class="validate">
-                      <label for="gVisitante" class="blue-text text-lighten-3">Goles Visitante</label>
-                    </div>
-                  </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <a class="waves-effect waves-light btn"><i class="material-icons left">person</i>Apostar</a>
-                <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancelar</a>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="waves-effect waves-light btn"><i class="material-icons left">person</i>Apostar</button>
+                    <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancelar</a>
+                </div>
+            </form>
         </div>
 
       <!--JQuery-->
