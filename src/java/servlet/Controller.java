@@ -76,7 +76,7 @@ public class Controller extends HttpServlet {
             List partidos = query.getResultList();                       
             session.setAttribute("partidos",partidos);
             
-            dispatcher = request.getRequestDispatcher("jornadas.jsp");
+            dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
         }       
 
