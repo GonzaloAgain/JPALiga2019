@@ -117,6 +117,9 @@ public class Controller extends HttpServlet {
             porra.setGoleslocal(goleslocal);
             porra.setGolesvisitante(golesvisitante);
             
+            dispatcher = request.getRequestDispatcher("home.jsp");
+            dispatcher.forward(request, response);
+            
         } else if (op.equals("infoapuestas")){
             
         }
