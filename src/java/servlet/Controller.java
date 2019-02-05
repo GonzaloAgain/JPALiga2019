@@ -6,6 +6,9 @@
 package servlet;
 
 import entities.Jornada;
+import entities.Partido;
+import entities.Porra;
+import entities.PorraPK;
 import entities.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,6 +50,7 @@ public class Controller extends HttpServlet {
         String sql;
         Query query;
         EntityManager em = null;
+        Usuario user = null;
         
         if (em == null) {
             em = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -89,17 +93,16 @@ public class Controller extends HttpServlet {
         if (op.equals("login")) {
             String nombre = (String) request.getParameter("nombre");
             String dni = (String) request.getParameter("dni"); 
-            Usuario user = em.find(Usuario.class, dni);
-            
-            Usuario usuario = null;
+            user = em.find(Usuario.class, dni);
             
             if (user == null){
-                usuario = new Usuario(dni);
-                usuario.setNombre(nombre);
-                em.persist(usuario);
+                Usuario nuevoUsuario = new Usuario(dni);
+                nuevoUsuario.setNombre(nombre);
+                em.persist(nuevoUsuario);
+                user = nuevoUsuario;
             }
             
-            session.setAttribute("usuario", usuario);
+            session.setAttribute("usuario", user);
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
@@ -107,7 +110,23 @@ public class Controller extends HttpServlet {
             session.setAttribute("usuario", null);
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
-        } else if (op.equals("apostar")){
+            
+        } else if (op.equals("apostar")){  
+            user = (Usuario) session.getAttribute("usuario");
+            short idpartido = Short.valueOf(request.getParameter("idPartido"));
+            Partido partido = em.find(Partido.class, idpartido);
+            short goleslocal = Short.valueOf(request.getParameter("gLocal"));
+            short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
+            
+            PorraPK porraPK = new PorraPK(user.getDni(),idpartido);
+            
+            Porra porra = new Porra(porraPK);
+            porra.setUsuario(user);
+            porra.setPartido(partido);
+            porra.setGoleslocal(goleslocal);
+            porra.setGolesvisitante(golesvisitante);
+            
+        } else if (op.equals("infoapuestas")){
             
         }
     }
