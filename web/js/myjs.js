@@ -3,5 +3,12 @@ $(document).ready(function() {
     init();
 });
 
+function init(){
+    $('#modal-login').modal();
+    $('#modal-listaApuestas').modal();
+    $('#modal-apostar').modal();
+    $('.modal-trigger').modal();
+}
+
 
 
