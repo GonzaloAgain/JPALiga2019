@@ -90,25 +90,20 @@ public class Controller extends HttpServlet {
         if (op.equals("login")) {
             String nombre = (String) request.getParameter("nombre");
             String dni = (String) request.getParameter("dni"); 
-            Usuario user = (Usuario) em.find(Usuario.class, dni);
+            Usuario user = em.find(Usuario.class, dni);
             
             if (user == null){
                 Usuario usuario = new Usuario(dni);
                 usuario.setNombre(nombre);
                 em.persist(usuario);
-                logeado = true;
-            } else {
-                logeado = true;
             }
             
-            session.setAttribute("islogueado", logeado);
-            session.setAttribute("nombreuser", nombre); 
+            session.setAttribute("usuario", user); 
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
         } else if (op.equals("logout")){
-            logeado = false;
-            session.setAttribute("islogueado", logeado);
+            session.setAttribute("usuario", null);
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
         } else if (op.equals("apostar")){
