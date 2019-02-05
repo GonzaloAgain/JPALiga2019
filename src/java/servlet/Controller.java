@@ -59,35 +59,27 @@ public class Controller extends HttpServlet {
         op = request.getParameter("op");
         
         if (op.equals("inicio")) {
-            sql = "select j from jornada j";
+            sql = "select j.nombre,j.fechainicio,j.fechafin from Jornada j";
             query = em.createQuery(sql);
-            List jornadas = query.getResultList();
+            List jornadas = query.getResultList();           
             session.setAttribute("jornadas",jornadas);
             
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
-        }else if(op.equals("jornadas")){
-            String hora = (String) request.getParameter("hora");
-            String escudo = (String) request.getParameter("escudo");
-            String local = (String) request.getParameter("local");
-            String visitante = (String) request.getParameter("visitante");
-            String goleslocal = (String) request.getParameter("goleslocal");
-            String golesvisitante = (String) request.getParameter("golesvisitante");
-            hora = hora.replace("/", "-");
+        }else if(op.equals("jornada")){
+            sql = "select p from Partido p where p.idjornada.idjornada";
+ //           Jornada jornada = em.find(Jornada.class, idjornada);           
+ //           jornada.getPartidoList();
             
-            sql = "SELECT p FROM Partido p WHERE p.fecha = :fecha";
             query = em.createQuery(sql);
-            query.setParameter(1,escudo);
-            query.setParameter(2,local);
-            query.setParameter(3,goleslocal);
-            query.setParameter(4,golesvisitante);
-            query.setParameter(5,visitante);
-            List todosLosPartidos = query.getResultList();
+            List partidos = query.getResultList();                       
+            session.setAttribute("partidos",partidos);
             
             dispatcher = request.getRequestDispatcher("jornadas.jsp");
             dispatcher.forward(request, response);
         }       
+
         
         if (op.equals("login")) {
             String nombre = (String) request.getParameter("nombre");
