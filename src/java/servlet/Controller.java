@@ -63,7 +63,7 @@ public class Controller extends HttpServlet {
         if (op.equals("inicio")) {
             sql = "select j.idjornada,j.nombre,j.fechainicio,j.fechafin from Jornada j";
             query = em.createQuery(sql);
-            List jornadas = query.getResultList();           
+            List<Jornada> jornadas = query.getResultList();           
             session.setAttribute("jornadas",jornadas);
             
             dispatcher = request.getRequestDispatcher("home.jsp");
