@@ -4,12 +4,15 @@
     Author     : Diurno
 --%>
 
+<%@page import="entities.Usuario"%>
+<%@page import="entities.Partido"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
   <html>
     <head>
       <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="css/fonts.css" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
       <!--Mycss-->
@@ -19,7 +22,12 @@
     </head>
 
     <body>
+        <% List partidos = (List) session.getAttribute("partidos");
+        Partido partido;
+        
+        Usuario user = (Usuario) session.getAttribute("usuario");
 
+        %>
     <div class="container">
 
       <nav>
@@ -59,30 +67,37 @@
       <div class="row">
 
         <table class="centered responsive-table">
-          <!-- if login == null show table without buttons -->
+          <% if(user==null){ %>
           <tbody>
-          <% for (int i = 0;i<partidos.size();i++){%>
+          <% for (int i = 0;i<partidos.size();i++){
+          partido = (Partido)partidos.get(i);
+          %>
           <tr>
-            <td colspan="2">Escudo 1</td>
-            <td><h4>Equipo1</h4></td>
-            <td><h4>0 - 0</h4></td>
-            <td><h4>Equipo2</h4></td>
-            <td colspan="2">Escudo 2</td>
+            <td colspan="2"><%=partido.getLocal().getEscudo() %></td>
+            <td><h4><%=partido.getLocal().getNombre() %></h4></td>
+            <td><h4><%=partido.getGoleslocal()%> - <%=partido.getGolesvisitante() %></h4></td>
+            <td><h4><%=partido.getVisitante().getNombre() %></h4></td>
+            <td colspan="2"><%=partido.getVisitante().getEscudo() %></td>
           </tr>
           <%} %>
           </tbody>
+          <% } %>
           <!-- if login != null show table with buttons -->
+          <% if(user != null){ %>
           <tbody>
-          <% %>
+          <% for (int i = 0;i<partidos.size();i++){
+          partido = (Partido)partidos.get(i);
+          %>
           <tr>
-            <td><button data-target="modal-listaApuestas" data-id="IdPartido" class="btn modal-trigger"><i class="small material-icons">info</i></button></td>
-            <td>Escudo 1</td>
-            <td><h4>Equipo1</h4></td>
-            <td><h4>0 - 0</h4></td>
-            <td><h4>Equipo2</h4></td>
-            <td>Escudo 2</td>
-            <td><button data-target="modal-apostar" data-id="IdPartido" data-whatever="Local-Visitante" class="btn modal-trigger">Apostar</button></td>
+            <td><button data-target="modal-listaApuestas" data-id="<%=partido.getIdjornada() %>" class="btn modal-trigger"><i class="small material-icons">info</i></button></td>
+            <td><%=partido.getLocal().getEscudo() %></td>
+            <td><h4><%=partido.getLocal().getNombre() %></h4></td>
+            <td><h4><%=partido.getGoleslocal()%> - <%=partido.getGolesvisitante() %></h4></td>
+            <td><h4><%=partido.getVisitante().getNombre() %></h4></td>
+            <td><%=partido.getVisitante().getEscudo() %></td>
+            <td><button data-target="modal-apostar" data-id="<%=partido.getIdjornada() %>" data-whatever="<%=partido.getLocal().getNombre()%> - <%=partido.getVisitante().getNombre()%>" class="btn modal-trigger">Apostar</button></td>
           </tr>
+          <% } %>
           </tbody>
         </table>
       </div>
@@ -135,7 +150,6 @@
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <!--JQuery-->
       <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-      <script type="text/javascript" src="js/jquery-3.3.1.slim.min.js"></script>
       <!--Myjs-->
       <script type="text/javascript" src="js/myjs.js"></script>
     </body>
