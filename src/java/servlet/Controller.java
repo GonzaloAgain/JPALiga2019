@@ -31,19 +31,38 @@ public class Controller extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Controller</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Controller at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        String op;
+        List lhl;
+        List lh;
+        String sql;
+        Query query;
+        Session em = null;
+        
+        em = (Session) session.getAttribute("em");
+        if (em == null) {
+            em = HibernateUtil.getSessionFactory().openSession();
+            session.setAttribute("em", em);
         }
+
+        op = request.getParameter("op");
+        
+        if (op.equals("inicio")) {
+            sql = "from Habitacion where ocupada=false";
+            query = em.createQuery(sql);
+            lhl = query.list();
+            session.setAttribute("lhl", lhl);
+
+            sql = "from Habitacion";
+            query = em.createQuery(sql);
+            lh = query.list();
+            session.setAttribute("lh", lh);
+            session.setAttribute("ficha", "entrada");
+            dispatcher = request.getRequestDispatcher("home.jsp");
+            dispatcher.forward(request, response);
+
+        } 
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
