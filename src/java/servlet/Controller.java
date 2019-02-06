@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import entities.InfoApuesta;
 import entities.Jornada;
 import entities.Partido;
 import entities.Porra;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -126,7 +128,18 @@ public class Controller extends HttpServlet {
             dispatcher.forward(request, response);
             
         } else if (op.equals("infoapuestas")){
+            short idpartido = Short.valueOf(request.getParameter("idPartido"));
+            //sql = "select p.goleslocal,p.golesvisitante,count(p) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante";
+            //query = em.createQuery(sql);
+            //query.setParameter("idpartido", idpartido);
             
+            TypedQuery<InfoApuesta> queryprueba = em.createQuery("select p.goleslocal,p.golesvisitante,count(p) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante", InfoApuesta.class);
+            queryprueba.setParameter("idpartido", idpartido);
+            List<InfoApuesta> results = queryprueba.getResultList();
+            
+            request.setAttribute("infoapuestas", results);
+            dispatcher = request.getRequestDispatcher("apuestas.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }
