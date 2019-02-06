@@ -91,7 +91,7 @@ public class Equipo implements Serializable {
         return partidoList1;
     }
 
-    public void setPartidoList1(List<Partido> partidoList) {
+    public void setPartidoList1(List<Partido> partidoList1) {
         this.partidoList1 = partidoList1;
     }
 
