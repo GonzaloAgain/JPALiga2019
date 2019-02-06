@@ -1,10 +1,19 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 19-dic-2017, 13:39:08
-    Author     : pacopulido
-*/
+#dni{
+    border-bottom: 1px solid #90caf9;
+}
 
+#nombre{
+    border-bottom: 1px solid #90caf9;
+}
+
+#gLocal{
+    border-bottom: 1px solid #90caf9;
+}
+
+#gVisitante{
+    border-bottom: 1px solid #90caf9;
+}
+
+#tituloApuestas{
+    padding: 5px 0px;
+}

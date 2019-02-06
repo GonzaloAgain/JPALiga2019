@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,7 +45,7 @@ public class Jornada implements Serializable {
     @Column(name = "FECHAFIN")
     private String fechafin;
     @OneToMany(mappedBy = "idjornada")
-    private Collection<Partido> partidoCollection;
+    private List<Partido> partidoList;
 
     public Jornada() {
     }
@@ -87,12 +87,12 @@ public class Jornada implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Partido> getPartidoCollection() {
-        return partidoCollection;
+    public List<Partido> getPartidoList() {
+        return partidoList;
     }
 
-    public void setPartidoCollection(Collection<Partido> partidoCollection) {
-        this.partidoCollection = partidoCollection;
+    public void setPartidoList(List<Partido> partidoList) {
+        this.partidoList = partidoList;
     }
 
     @Override

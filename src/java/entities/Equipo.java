@@ -6,7 +6,7 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,9 +42,9 @@ public class Equipo implements Serializable {
     @Column(name = "ESCUDO")
     private String escudo;
     @OneToMany(mappedBy = "local")
-    private Collection<Partido> partidoCollection;
+    private List<Partido> partidoList;
     @OneToMany(mappedBy = "visitante")
-    private Collection<Partido> partidoCollection1;
+    private List<Partido> partidoList1;
 
     public Equipo() {
     }
@@ -78,21 +78,21 @@ public class Equipo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Partido> getPartidoCollection() {
-        return partidoCollection;
+    public List<Partido> getPartidoList() {
+        return partidoList;
     }
 
-    public void setPartidoCollection(Collection<Partido> partidoCollection) {
-        this.partidoCollection = partidoCollection;
+    public void setPartidoList(List<Partido> partidoList) {
+        this.partidoList = partidoList;
     }
 
     @XmlTransient
-    public Collection<Partido> getPartidoCollection1() {
-        return partidoCollection1;
+    public List<Partido> getPartidoList1() {
+        return partidoList1;
     }
 
-    public void setPartidoCollection1(Collection<Partido> partidoCollection1) {
-        this.partidoCollection1 = partidoCollection1;
+    public void setPartidoList1(List<Partido> partidoList) {
+        this.partidoList1 = partidoList1;
     }
 
     @Override
