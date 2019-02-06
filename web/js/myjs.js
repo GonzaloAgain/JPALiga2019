@@ -3,6 +3,7 @@ $(document).ready(function() {
     init();
 });
 
+//Funcion que inicializa
 function init(){
     loadApuestas()
     $('#modal-login').modal();
@@ -12,6 +13,7 @@ function init(){
     apostar()
 }
 
+//Funcion para cargar la tabla de apuestas mediante ajax
 function loadApuestas(){
     $('#modal-listaApuestas').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -26,6 +28,7 @@ function loadApuestas(){
     });
 }
 
+//Funcion que mete los datos necesarios para hacer la apuesta
 function apostar(){
     $('#modal-apostar').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
