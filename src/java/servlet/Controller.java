@@ -68,11 +68,14 @@ public class Controller extends HttpServlet {
             dispatcher.forward(request, response);
             
         }else if(op.equals("jornada")){
-            sql = "select p from Partido p where p.idjornada.idjornada";
+            sql = "select p from Partido p where p.idjornada.idjornada = :idJornada";
+            
  //           Jornada jornada = em.find(Jornada.class, idjornada);           
  //           jornada.getPartidoList();
             
+            short idjornada = Short.valueOf(request.getParameter("idJornada"));
             query = em.createQuery(sql);
+            query.setParameter("idjornada", idjornada);
             List partidos = query.getResultList();                       
             session.setAttribute("partidos",partidos);
             
