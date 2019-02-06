@@ -137,7 +137,11 @@ public class Controller extends HttpServlet {
             queryprueba.setParameter("idpartido", idpartido);
             List<InfoApuesta> results = queryprueba.getResultList();
             
+            Partido partido = em.find(Partido.class, idpartido);
+            String nombrepartido = partido.getLocal() + " - " + partido.getVisitante();
+            
             request.setAttribute("infoapuestas", results);
+            request.setAttribute("nombrepartido", nombrepartido);
             dispatcher = request.getRequestDispatcher("apuestas.jsp");
             dispatcher.forward(request, response);
         }
