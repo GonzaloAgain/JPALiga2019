@@ -4,6 +4,7 @@
     Author     : Diurno
 --%>
 
+<%@page import="entities.Jornada"%>
 <%@page import="entities.Usuario"%>
 <%@page import="entities.Partido"%>
 <%@page import="java.util.List"%>
@@ -26,7 +27,10 @@
         Partido partido;
         
         Usuario user = (Usuario) session.getAttribute("usuario");
-
+        
+        List jornadas = (List) session.getAttribute("jornadas");
+        
+        Jornada jornada = null;
         %>
     <div class="container">
 
@@ -55,8 +59,10 @@
             <div class="input-field col s6 offset-s3">
               <select onchange='window.location="Controller?op="+this.value'>
                 <option value="" disabled selected>Choose your option</option>
-                <option value="3">Option 3</option>
-                <option value="3">Option 4</option>
+                 <% for(int i=0;i<jornadas.size();i++){ 
+                 jornada = (Jornada)jornadas.get(i);
+                 }%>
+                 <option value="<%=jornada.getIdjornada() %>"><%=jornada.getNombre() %>(<%=jornada.getFechainicio() %> - <%=jornada.getFechafin() %>)</option>
               </select>
               <label>Selecciona jornada</label>
             </div>
