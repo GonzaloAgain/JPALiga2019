@@ -78,7 +78,7 @@ public class Controller extends HttpServlet {
             short idjornada = Short.valueOf(request.getParameter("idJornada"));
             query = em.createQuery(sql);
             query.setParameter("idjornada", idjornada);
-            List partidos = query.getResultList();                       
+            List <Partido> partidos = query.getResultList();                       
             session.setAttribute("partidos",partidos);
             
             dispatcher = request.getRequestDispatcher("home.jsp");
