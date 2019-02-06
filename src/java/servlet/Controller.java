@@ -110,12 +110,14 @@ public class Controller extends HttpServlet {
             short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
             
             PorraPK porraPK = new PorraPK(user.getDni(),idpartido);
+            em.persist(porraPK);
             
             Porra porra = new Porra(porraPK);
             porra.setUsuario(user);
             porra.setPartido(partido);
             porra.setGoleslocal(goleslocal);
             porra.setGolesvisitante(golesvisitante);
+            em.persist(porra);
             
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
