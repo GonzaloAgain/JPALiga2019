@@ -49,6 +49,24 @@
                 </ul>
               </div>
             </nav>
+                
+            <!--Esto es el dropbox de los huevos // Hay que mirar un par de cosillas -->
+            <div class="container">
+              <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    <select onchange='window.location="Controller?op=jornada"'>
+                      <option value="" disabled selected>Choose your option</option>
+                       <% 
+                           for(int i=0;i<jornadas.size();i++){ 
+                            jornada = (Jornada)jornadas.get(i);
+                       %>
+                       <option value="<%=jornada.getIdjornada() %>"><%=jornada.getNombre() %>(<%=jornada.getFechainicio() %> - <%=jornada.getFechafin() %>)</option>
+                       <% } %>
+                    </select>
+                    <label>Selecciona jornada</label>
+                 </div>
+              </div>
+            </div>
             
         </div>
     </body>
