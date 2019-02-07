@@ -10,18 +10,18 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+  <html>
     <head>
-        <!--Import Google Icon Font-->
-        <link href="css/fonts.css" rel="stylesheet">
-        <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-        <!--Mycss-->
-        <link type="text/css" rel="stylesheet" href="css/mycss.css"  media="screen,projection"/>
-        <!--Let browser know website is optimized for mobile-->
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+      <!--Import Google Icon Font-->
+      <link href="css/fonts.css" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/mycss.css"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
+
     <body>
         <% 
             List partidos = (List) session.getAttribute("partidos");
@@ -69,10 +69,24 @@
             </div>
             
         </div>
-                    
-        <!--JavaScript at end of body for optimized loading-->
+        
+    <h1>hello work Materialize Offline</h1>
+    
+    <div class="input-field col s12">
+      <select>
+        <option value="" disabled selected>Choose your option</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </select>
+      <label>Materialize Select</label>
+    </div>
+
+
+
+      <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <script type="text/javascript" src="js/myjs.js"></script>
     </body>
-</html>
+  </html>
