@@ -67,14 +67,22 @@
                  </div>
               </div>
             </div>
+                    
+            <div class="input-field col s12">
+                <select>
+                  <option value="" disabled selected>Choose your option</option>
+                  <option value="1">Option 1</option>
+                  <option value="2">Option 2</option>
+                  <option value="3">Option 3</option>
+                </select>
+                <label>Materialize Select</label>
+             </div>
             
         </div>
                     
         <!--JavaScript at end of body for optimized loading-->
-        <script type="text/javascript" src="js/materialize.min.js"></script>
-        <!--JQuery-->
-        <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-        <!--Myjs-->
-        <script type="text/javascript" src="js/myjs.js"></script>
+      <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/myjs.js"></script>
     </body>
 </html>
