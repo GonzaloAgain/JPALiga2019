@@ -60,23 +60,13 @@
                            for(int i=0;i<jornadas.size();i++){ 
                             jornada = (Jornada)jornadas.get(i);
                        %>
-                       <option value="<%=jornada.getIdjornada() %>"><%=jornada.getNombre() %>(<%=jornada.getFechainicio() %> - <%=jornada.getFechafin() %>)</option>
+                       <option value="<%=jornada.getIdjornada() %>"><%=jornada.getNombre() %> (<%=jornada.getFechainicio() %> - <%=jornada.getFechafin() %>)</option>
                        <% } %>
                     </select>
                     <label>Selecciona jornada</label>
                  </div>
               </div>
             </div>
-                    
-            <div class="input-field col s12">
-                <select>
-                  <option value="" disabled selected>Choose your option</option>
-                  <option value="1">Option 1</option>
-                  <option value="2">Option 2</option>
-                  <option value="3">Option 3</option>
-                </select>
-                <label>Materialize Select</label>
-             </div>
             
         </div>
                     
