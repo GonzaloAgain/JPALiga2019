@@ -23,14 +23,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <% List partidos = (List) session.getAttribute("partidos");
-        Partido partido;
-        
-        Usuario user = (Usuario) session.getAttribute("usuario");
-        
-        List jornadas = (List) session.getAttribute("jornadas");
-        
-        Jornada jornada = null;
+        <% 
+            List partidos = (List) session.getAttribute("partidos");
+            Partido partido;
+            Usuario user = (Usuario) session.getAttribute("usuario");
+            List jornadas = (List) session.getAttribute("jornadas");
+            Jornada jornada = null;
         %>
         <div class="container">
             <nav>
@@ -38,8 +36,16 @@
                 <img src="img/liga.png" class="brand-logo responsive-img"/>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                  <li><h5>Hola, Usuario </h5></li>
-                  <li><a class="waves-effect waves-light btn"><i class="material-icons left">exit_to_app</i>Log Out</a></li>
+                <% 
+                    if (user == null){
+                %>
+                       <li><a class="waves-effect waves-light btn">Login</a></li> 
+                <%
+                    } else {
+                 %>
+                        <li><h5>Hola, Usuario </h5></li>
+                        <li><a class="waves-effect waves-light btn"><i class="material-icons left">exit_to_app</i>Log Out</a></li>
+                <%  }   %>  
                 </ul>
               </div>
             </nav>
