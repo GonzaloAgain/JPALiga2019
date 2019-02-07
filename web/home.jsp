@@ -170,7 +170,7 @@
       <form action="Controller?op=apostar" method="post">
         <div class="modal-content">
           <h4>Apuesta</h4>
-          <h5 id="partido" class="center">Partido</h5>
+          <h5 id="partido" class="center"></h5>
           <div class="row">
             <div class="input-field col m6">
               <input id="gLocal" type="text" name="gLocal" class="validate">
