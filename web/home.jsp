@@ -120,9 +120,9 @@
           %>
           <tr>
               <td colspan="2"><img src="<%=partido.getLocal().getEscudo() %>"/></td>
-            <td><h4><%=partido.getLocal().getNombre() %></h4></td>
-            <td><h5><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h5></td>
-            <td><h4><%=partido.getVisitante().getNombre() %></h4></td>
+            <td><h5><%=partido.getLocal().getNombre() %></h5></td>
+            <td><h6><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h6></td>
+            <td><h5><%=partido.getVisitante().getNombre() %></h5></td>
             <td colspan="2"><img src="<%=partido.getVisitante().getEscudo() %>"/></td>
           </tr>
           <% } %>
@@ -136,11 +136,11 @@
           <tr>
             <td><button data-target="modal-listaApuestas" data-id="<%=partido.getIdjornada() %>" class="btn modal-trigger"><i class="small material-icons">info</i></button></td>
             <td><img src="<%=partido.getLocal().getEscudo() %>"/></td>
-            <td><h4><%=partido.getLocal().getNombre() %></h4></td>
-            <td><h5><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h5></td>
-            <td><h4><%=partido.getVisitante().getNombre() %></h4></td>
+            <td><h5><%=partido.getLocal().getNombre() %></h5></td>
+            <td><h6><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h6></td>
+            <td><h5><%=partido.getVisitante().getNombre() %></h5></td>
             <td><img src="<%=partido.getVisitante().getEscudo() %>"/></td>
-            <td><button data-target="modal-apostar" data-id="<%=partido.getIdjornada() %>" data-whatever="<%=partido.getLocal().getNombre()%> - <%=partido.getVisitante().getNombre()%>" class="btn modal-trigger">Apostar</button></td>
+            <td><button data-target="modal-apostar" data-id="<%=partido.getIdjornada()%>" data-whatever="<%=partido.getLocal().getNombre()%> - <%=partido.getVisitante().getNombre()%>" class="btn modal-trigger">Apostar</button></td>
           </tr>
           <% }} %>
           </tbody>
@@ -200,9 +200,9 @@
       <script type="text/javascript" src="js/myjs.js"></script>
       
       <% if(idjornadita!=null){ %>
-              <script type="text/javascript">
-                  $('#selectjornada').val('<%= idjornadita %>')
-              </script>
-              <% } %>
+        <script type="text/javascript">
+            $('#selectjornada').val('<%= idjornadita %>')
+        </script>
+      <% } %>
     </body>
   </html>
