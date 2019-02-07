@@ -66,7 +66,7 @@ public class Controller extends HttpServlet {
             List<Jornada> jornadas = query.getResultList();           
             session.setAttribute("jornadas",jornadas);
             
-            dispatcher = request.getRequestDispatcher("home.jsp");
+            dispatcher = request.getRequestDispatcher("modales.html");
             dispatcher.forward(request, response);
             
         }else if(op.equals("jornada")){

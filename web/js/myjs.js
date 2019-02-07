@@ -1,7 +1,7 @@
 $(document).ready(function() {
     console.log('ready');
     $('select').formSelect();
-    init();
+    //init();
 });
 
 //Funcion que inicializa
@@ -12,6 +12,7 @@ function init(){
     $('#modal-apostar').modal();
     $('.modal-trigger').modal();
     apostar()
+    
 }
 
 //Funcion para cargar la tabla de apuestas mediante ajax
