@@ -74,12 +74,18 @@ public class Controller extends HttpServlet {
             
  //           Jornada jornada = em.find(Jornada.class, idjornada);           
  //           jornada.getPartidoList();
-            
-            short idjornada = Short.valueOf(request.getParameter("idJornada"));
+            Short idjornadillu;
+            String idjornada = (String) request.getParameter("idJornada");
+            if(idjornada==""){
+            idjornadillu = 0;
+            }else{
+            idjornadillu = Short.valueOf(idjornada);
+            }
             query = em.createQuery(sql);
-            query.setParameter("idjornada", idjornada);
+            query.setParameter("idJornada",idjornadillu );
             List <Partido> partidos = query.getResultList();                       
             session.setAttribute("partidos",partidos);
+            session.setAttribute("idJornada",idjornada);
             
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);

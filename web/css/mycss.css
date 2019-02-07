@@ -17,3 +17,16 @@
 #tituloApuestas{
     padding: 5px 0px;
 }
+
+td{
+    height:250px;
+}
+
+table h4{
+    width:300px;
+}
+
+table img{
+    height:200px;
+    width:200px;
+}
