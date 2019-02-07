@@ -66,7 +66,7 @@ public class Controller extends HttpServlet {
             List<Jornada> jornadas = query.getResultList();           
             session.setAttribute("jornadas",jornadas);
             
-            dispatcher = request.getRequestDispatcher("modales.html");
+            dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
         }else if(op.equals("jornada")){
@@ -94,7 +94,9 @@ public class Controller extends HttpServlet {
             if (user == null){
                 Usuario nuevoUsuario = new Usuario(dni);
                 nuevoUsuario.setNombre(nombre);
+                em.getTransaction().begin();
                 em.persist(nuevoUsuario);
+                em.getTransaction().commit();
                 user = nuevoUsuario;
             }
             
@@ -115,6 +117,7 @@ public class Controller extends HttpServlet {
             short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
             
             PorraPK porraPK = new PorraPK(user.getDni(),idpartido);
+            em.getTransaction().begin();
             em.persist(porraPK);
             
             Porra porra = new Porra(porraPK);
@@ -123,7 +126,8 @@ public class Controller extends HttpServlet {
             porra.setGoleslocal(goleslocal);
             porra.setGolesvisitante(golesvisitante);
             em.persist(porra);
-            
+            em.getTransaction().commit();
+          
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
