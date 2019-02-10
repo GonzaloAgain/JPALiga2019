@@ -123,9 +123,6 @@ public class Controller extends HttpServlet {
             short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
             
             PorraPK porraPK = new PorraPK(user.getDni(), Short.valueOf(idpartido));
-            em.getTransaction().begin();
-            em.persist(porraPK);
-            em.getTransaction().commit();
             
             Porra porra = new Porra(porraPK);
             porra.setUsuario(user);
@@ -135,6 +132,7 @@ public class Controller extends HttpServlet {
             
             em.getTransaction().begin();
             em.persist(porra);
+            em.refresh(user);
             em.getTransaction().commit();
           
             dispatcher = request.getRequestDispatcher("home.jsp");
