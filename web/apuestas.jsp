@@ -9,7 +9,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     List listaApuestas= (List) request.getAttribute("infoapuestas");
-    String nombrePartido = (String) request.getParameter("nombrepartido");
+    String nombrePartido = (String) request.getAttribute("nombrepartido");
     if(listaApuestas.size()==0){
 %>
     <h6> <%=nombrePartido%> </h6>

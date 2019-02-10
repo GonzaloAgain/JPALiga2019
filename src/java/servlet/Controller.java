@@ -125,12 +125,15 @@ public class Controller extends HttpServlet {
             PorraPK porraPK = new PorraPK(user.getDni(), Short.valueOf(idpartido));
             em.getTransaction().begin();
             em.persist(porraPK);
+            em.getTransaction().commit();
             
             Porra porra = new Porra(porraPK);
             porra.setUsuario(user);
             porra.setPartido(partido);
             porra.setGoleslocal(goleslocal);
             porra.setGolesvisitante(golesvisitante);
+            
+            em.getTransaction().begin();
             em.persist(porra);
             em.getTransaction().commit();
           
@@ -138,7 +141,7 @@ public class Controller extends HttpServlet {
             dispatcher.forward(request, response);
             
         } else if (op.equals("infoapuestas")){
-            short idpartido = Short.valueOf(request.getParameter("idPartido"));
+            short idpartido = Short.valueOf(request.getParameter("idpartido"));
             //sql = "select p.goleslocal,p.golesvisitante,count(p) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante";
             //query = em.createQuery(sql);
             //query.setParameter("idpartido", idpartido);

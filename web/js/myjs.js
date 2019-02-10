@@ -5,12 +5,12 @@ $(document).ready(function() {
 
 //Funcion que inicializa
 function init(){
+    loadApuestas();
     $('select').material_select();
     $('#modal-login').modal();
     $('#modal-listaApuestas').modal();
     $('#modal-apostar').modal();
     $('.modal-trigger').modal();
-    loadApuestas();
     apostar();
 }
 
