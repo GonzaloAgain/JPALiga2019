@@ -52,39 +52,76 @@
               </div>
             </nav>
                 
-      <ul class="sidenav" id="mobile-demo">
-                 <% 
+            <ul class="sidenav" id="mobile-demo">
+                <% 
                     if (user == null){
                 %>
-                       <li><button data-target="modal-login" class="btn modal-trigger">Login</button></li> 
+                      <li><button data-target="modal-login" class="btn modal-trigger">Login</button></li> 
                 <%
                     } else {
-                 %>
-                        <li><h5>Hola, <%=user.getNombre()%> </h5></li>
-                        <li><a href="Controller?op=logout" class="waves-effect waves-light btn"><i class="material-icons left">exit_to_app</i>Log Out</a></li>
+                %>
+                       <li><h5>Hola, <%=user.getNombre()%> </h5></li>
+                       <li><a href="Controller?op=logout" class="waves-effect waves-light btn"><i class="material-icons left">exit_to_app</i>Log Out</a></li>
                 <%  }   %>  
-      </ul>
-                
-                
-       <div class="container">
-        <div class="row">
-            <div class="input-field col s6 offset-s3">
-                <select id="selectjornada" onchange='window.location="Controller?op=jornada&idJornada="+this.value'>
-                <option value="" selected>Choose your option</option>
-                 <% for(int i=0;i<jornadas.size();i++){ 
-                 jornada = (Jornada)jornadas.get(i);
-                 %>
-                 <option value="<%=jornada.getIdjornada() %>"><%=jornada.getNombre() %>(<%=jornada.getFechainicio() %> - <%=jornada.getFechafin() %>)</option>
-                 <%}%>
-              </select>
-              <label>Selecciona jornada</label>
+            </ul>                  
+            <div class="container">
+                <div class="row">
+                    <div class="input-field col s6 offset-s3">
+                        <select id="selectjornada" onchange='window.location="Controller?op=jornada&idJornada="+this.value'>
+                        <option value="" selected>Choose your option</option>
+                         <% for(int i=0;i<jornadas.size();i++){ 
+                         jornada = (Jornada)jornadas.get(i);
+                         %>
+                         <option value="<%=jornada.getIdjornada() %>"><%=jornada.getNombre() %>(<%=jornada.getFechainicio() %> - <%=jornada.getFechafin() %>)</option>
+                         <%}%>
+                      </select>
+                      <label>Selecciona jornada</label>
+                    </div>
+                </div>
+            </div>  
+               
+            <div class="row">
+                <% if(idjornadita=="" || idjornadita==null){ %>
+                    <img class="col s12" src="img/bg.jpg">
+                <% }else{ %>
+                    <table class="centered responsive-table">
+                      <% if(user==null){ %>
+                            <tbody>
+                                <% for (int i = 0;i<partidos.size();i++){
+                                    partido = (Partido)partidos.get(i);
+                                %>
+                                    <tr>
+                                        <td colspan="2"><img src="<%=partido.getLocal().getEscudo() %>"/></td>
+                                        <td><h5><%=partido.getLocal().getNombre() %></h5></td>
+                                        <td><h6><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h6></td>
+                                        <td><h5><%=partido.getVisitante().getNombre() %></h5></td>
+                                        <td colspan="2"><img src="<%=partido.getVisitante().getEscudo() %>"/></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        <!-- if login != null show table with buttons -->
+                      <% } else { %>
+                            <tbody>
+                                <% for (int i = 0;i<partidos.size();i++){
+                                    partido = (Partido)partidos.get(i);
+                                %>
+                                    <tr>
+                                      <td><button data-target="modal-listaApuestas" data-id="<%=partido.getIdpartido()%>" class="btn modal-trigger"><i class="small material-icons">info</i></button></td>
+                                      <td><img src="<%=partido.getLocal().getEscudo() %>"/></td>
+                                      <td><h5><%=partido.getLocal().getNombre() %></h5></td>
+                                      <td><h6><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h6></td>
+                                      <td><h5><%=partido.getVisitante().getNombre() %></h5></td>
+                                      <td><img src="<%=partido.getVisitante().getEscudo() %>"/></td>
+                                      <td><button data-target="modal-apostar" data-id="<%=partido.getIdpartido()%>" data-nom="<%=partido.getLocal().getNombre()%> - <%=partido.getVisitante().getNombre()%>" class="btn modal-trigger">Apostar</button></td>
+                                    </tr>
+                                <% }} %>
+                            </tbody>
+                    </table>
+                <% } %>
             </div>
         </div>
-      </div>  
-              
       
-              
-            <!-- Modal Login -->
+        <!-- Modal Login -->
         <div id="modal-login" class="modal">
             <form action="Controller?op=login" method="post">
                 <div class="modal-content">
@@ -106,93 +143,47 @@
                 </div>
             </form>
         </div>    
-               
-        <div class="row">
-            
-            <% if(idjornadita=="" || idjornadita==null){ %>
-            <img class="col s12" src="img/bg.jpg">
-            <% }else{ %>
-        <table class="centered responsive-table">
-          <% if(user==null){ %>
-          <tbody>
-          <% for (int i = 0;i<partidos.size();i++){
-          partido = (Partido)partidos.get(i);
-          %>
-          <tr>
-              <td colspan="2"><img src="<%=partido.getLocal().getEscudo() %>"/></td>
-            <td><h5><%=partido.getLocal().getNombre() %></h5></td>
-            <td><h6><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h6></td>
-            <td><h5><%=partido.getVisitante().getNombre() %></h5></td>
-            <td colspan="2"><img src="<%=partido.getVisitante().getEscudo() %>"/></td>
-          </tr>
-          <% } %>
-          </tbody>
-          <!-- if login != null show table with buttons -->
-          <% } else { %>
-          <tbody>
-          <% for (int i = 0;i<partidos.size();i++){
-          partido = (Partido)partidos.get(i);
-          %>
-          <tr>
-            <td><button data-target="modal-listaApuestas" data-id="<%=partido.getIdjornada() %>" class="btn modal-trigger"><i class="small material-icons">info</i></button></td>
-            <td><img src="<%=partido.getLocal().getEscudo() %>"/></td>
-            <td><h5><%=partido.getLocal().getNombre() %></h5></td>
-            <td><h6><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h6></td>
-            <td><h5><%=partido.getVisitante().getNombre() %></h5></td>
-            <td><img src="<%=partido.getVisitante().getEscudo() %>"/></td>
-            <td><button data-target="modal-apostar" data-id="<%=partido.getIdjornada()%>" data-whatever="<%=partido.getLocal().getNombre()%> - <%=partido.getVisitante().getNombre()%>" class="btn modal-trigger">Apostar</button></td>
-          </tr>
-          <% }} %>
-          </tbody>
-        </table>
-          <% } %>
-      </div>
-    </div>
 
-
-
-    <!-- Modal Lista Apuestas -->
-    <div id="modal-listaApuestas" class="modal m6">
-      <div class="modal-content center">
-        <h4 class="blue lighten-2" id="tituloApuestas">Información apuestas actuales</h4>
-        <div id="div-apuestas">
-          <!--Se rellena con ajax-->
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">fullscreen_exit</i>Aceptar</a>
-      </div>
-    </div>
-
-
-    <!-- Modal Apostar -->
-    <div id="modal-apostar" class="modal">
-      <form action="Controller?op=apostar" method="post">
-        <div class="modal-content">
-          <h4>Apuesta</h4>
-          <h5 id="partido" class="center"></h5>
-          <div class="row">
-            <div class="input-field col m6">
-              <input id="gLocal" type="text" name="gLocal" class="validate">
-              <label for="gLocal" class="blue-text text-lighten-3">Goles Local</label>
-            </div>
-            <div class="input-field col m6">
-              <input id="gVisitante" type="text" name="gVisitante" class="validate">
-              <label for="gVisitante" class="blue-text text-lighten-3">Goles Visitante</label>
-            </div>
-            <div>
-              <input type="hidden" id="idPartido" name="idPartido">
+        <!-- Modal Lista Apuestas -->
+        <div id="modal-listaApuestas" class="modal m6">
+          <div class="modal-content center">
+            <h4 class="blue lighten-2" id="tituloApuestas">Información apuestas actuales</h4>
+            <div id="div-apuestas">
+              <!--Se rellena con ajax-->
             </div>
           </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">fullscreen_exit</i>Aceptar</a>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button class="waves-effect waves-light btn"><i class="material-icons left">person</i>Apostar</button>
-          <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancelar</a>
-        </div>
-      </form>
-    </div>        
-          
-        </div>
+
+
+        <!-- Modal Apostar -->
+        <div id="modal-apostar" class="modal">
+          <form action="Controller?op=apostar" method="post">
+            <div class="modal-content">
+              <h4>Apuesta</h4>
+              <h5 id="partido" class="center"></h5>
+              <div class="row">
+                <div class="input-field col m6">
+                  <input id="gLocal" type="text" name="gLocal" class="validate">
+                  <label for="gLocal" class="blue-text text-lighten-3">Goles Local</label>
+                </div>
+                <div class="input-field col m6">
+                  <input id="gVisitante" type="text" name="gVisitante" class="validate">
+                  <label for="gVisitante" class="blue-text text-lighten-3">Goles Visitante</label>
+                </div>
+                <div>
+                  <input type="hidden" id="idPartido" name="idPartido">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="waves-effect waves-light btn"><i class="material-icons left">person</i>Apostar</button>
+              <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancelar</a>
+            </div>
+          </form>
+        </div> 
        
       <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>

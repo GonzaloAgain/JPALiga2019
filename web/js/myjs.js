@@ -5,43 +5,38 @@ $(document).ready(function() {
 
 //Funcion que inicializa
 function init(){
-    loadApuestas();
     $('select').material_select();
     $('#modal-login').modal();
     $('#modal-listaApuestas').modal();
     $('#modal-apostar').modal();
     $('.modal-trigger').modal();
+    loadApuestas();
     apostar();
 }
 
 //Funcion para cargar la tabla de apuestas mediante ajax
 function loadApuestas(){
-    $('#modal-listaApuestas').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var idPartido = button.data('id');
-        $.ajax({
-            type: "POST",
-            url: "Controller?op=infoapuestas&idpartido=" + idPartido,
-            success: function (info) {
-                $("#div-apuestas").html(info);
-            }
-        });
+    $('#modal-listaApuestas').modal({
+        ready: function(modal, trigger) {
+            $.ajax({
+                type: "POST",
+                url: "Controller?op=infoapuestas&idpartido=" + trigger.data('id'),
+                success: function (info) {
+                    $("#div-apuestas").html(info);
+                }
+            });
+        }
     });
 }
 
 //Funcion que mete los datos necesarios para hacer la apuesta
 function apostar(){
-    $('#modal-apostar').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var idpartido = button.data('id');
-        var partido=button.data('whatever');// Extract info from data-* attributes
-        console.log(partido);
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this);
-        modal.find('#idPartido').val(idpartido);
-        modal.find('#partido').text(partido);
-      });
+    $('#modal-apostar').modal({
+        ready: function(modal, trigger) {
+            modal.find('input[name="idPartido"]').val(trigger.data('id'));
+            modal.find('h5[id="partido"]').text(trigger.data('nom'));
+        }
+    });
 }
 
 

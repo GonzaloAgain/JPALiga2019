@@ -117,12 +117,12 @@ public class Controller extends HttpServlet {
             
         } else if (op.equals("apostar")){  
             user = (Usuario) session.getAttribute("usuario");
-            short idpartido = Short.valueOf(request.getParameter("idPartido"));
-            Partido partido = em.find(Partido.class, idpartido);
+            String idpartido = request.getParameter("idPartido");
+            Partido partido = em.find(Partido.class, Integer.valueOf(idpartido));
             short goleslocal = Short.valueOf(request.getParameter("gLocal"));
             short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
             
-            PorraPK porraPK = new PorraPK(user.getDni(),idpartido);
+            PorraPK porraPK = new PorraPK(user.getDni(), Short.valueOf(idpartido));
             em.getTransaction().begin();
             em.persist(porraPK);
             
