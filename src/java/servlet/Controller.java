@@ -132,7 +132,6 @@ public class Controller extends HttpServlet {
             
             em.getTransaction().begin();
             em.persist(porra);
-            em.refresh(user);
             em.getTransaction().commit();
           
             dispatcher = request.getRequestDispatcher("home.jsp");
