@@ -118,6 +118,7 @@ public class Controller extends HttpServlet {
         } else if (op.equals("apostar")){  
             user = (Usuario) session.getAttribute("usuario");
             String idpartido = request.getParameter("idPartido");
+            System.out.println(idpartido+" partido");
             Partido partido = em.find(Partido.class, Integer.valueOf(idpartido));
             short goleslocal = Short.valueOf(request.getParameter("gLocal"));
             short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
@@ -130,20 +131,20 @@ public class Controller extends HttpServlet {
             porra.setGoleslocal(goleslocal);
             porra.setGolesvisitante(golesvisitante);
             
-            em.getTransaction().begin();
+           /* em.getTransaction().begin();
             em.persist(porra);
-            em.getTransaction().commit();
+            em.getTransaction().commit();*/
           
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
         } else if (op.equals("infoapuestas")){
-            short idpartido = Short.valueOf(request.getParameter("idpartido"));
+            int idpartido = Integer.valueOf(request.getParameter("idpartido"));
             //sql = "select p.goleslocal,p.golesvisitante,count(p) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante";
             //query = em.createQuery(sql);
             //query.setParameter("idpartido", idpartido);
             
-            TypedQuery<InfoApuesta> queryprueba = em.createQuery("select p.goleslocal,p.golesvisitante,count(p) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante", InfoApuesta.class);
+            /*TypedQuery<InfoApuesta> queryprueba = em.createQuery("select p.goleslocal,p.golesvisitante,count(p) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante", InfoApuesta.class);
             queryprueba.setParameter("idpartido", idpartido);
             List<InfoApuesta> results = queryprueba.getResultList();
             
@@ -151,7 +152,18 @@ public class Controller extends HttpServlet {
             String nombrepartido = partido.getLocal() + " - " + partido.getVisitante();
             
             request.setAttribute("infoapuestas", results);
+            request.setAttribute("nombrepartido", nombrepartido);*/
+            
+           /* query = em.createQuery("select concat(p.goleslocal,'-',p.golesvisitante,' ',count(p)) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante");
+            query.setParameter("idpartido", idpartido);
+            List<String> lista=query.getResultList();*/
+            
+            Partido partido = em.find(Partido.class, idpartido);
+            String nombrepartido = partido.getLocal().getNombre() + " - " + partido.getVisitante().getNombre();
+            
+            //request.setAttribute("infoapuestas", lista);
             request.setAttribute("nombrepartido", nombrepartido);
+            
             dispatcher = request.getRequestDispatcher("apuestas.jsp");
             dispatcher.forward(request, response);
         } 

@@ -106,7 +106,7 @@
                                     partido = (Partido)partidos.get(i);
                                 %>
                                     <tr>
-                                      <td><button data-target="modal-listaApuestas" data-id="<%=partido.getIdpartido()%>" class="btn modal-trigger"><i class="small material-icons">info</i></button></td>
+                                      <td><button id="boton-apuestas" data-target="modal-listaApuestas" data-id="<%=partido.getIdpartido()%>" class="btn modal-trigger"><i class="small material-icons">info</i></button></td>
                                       <td><img src="<%=partido.getLocal().getEscudo() %>"/></td>
                                       <td><h5><%=partido.getLocal().getNombre() %></h5></td>
                                       <td><h6><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h6></td>
