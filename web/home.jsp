@@ -67,7 +67,7 @@
             </ul>                  
             <div class="container">
                 <div class="row">
-                    <div class="input-field col s6 offset-s3">
+                    <div class="input-field col s8 offset-s2">
                         <select id="selectjornada" onchange='window.location="Controller?op=jornada&idJornada="+this.value'>
                         <option value="" selected>Selecciona una jornada</option>
                          <% for(int i=0;i<jornadas.size();i++){ 
