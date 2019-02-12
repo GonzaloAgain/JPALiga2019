@@ -41,7 +41,8 @@
                 <% 
                     if (user == null){
                 %>
-                       <li><button data-target="modal-login" class="btn modal-trigger">Login</button></li> 
+                        <li><a data-target="modal-login" class="waves-effect waves-light btn modal-trigger">Login <i class="material-icons right">account_circle</i></a></li>
+                      
                 <%
                     } else {
                  %>
@@ -68,14 +69,13 @@
                 <div class="row">
                     <div class="input-field col s6 offset-s3">
                         <select id="selectjornada" onchange='window.location="Controller?op=jornada&idJornada="+this.value'>
-                        <option value="" selected>Choose your option</option>
+                        <option value="" selected>Selecciona una jornada</option>
                          <% for(int i=0;i<jornadas.size();i++){ 
                          jornada = (Jornada)jornadas.get(i);
                          %>
                          <option value="<%=jornada.getIdjornada() %>"><%=jornada.getNombre() %>(<%=jornada.getFechainicio() %> - <%=jornada.getFechafin() %>)</option>
                          <%}%>
                       </select>
-                      <label>Selecciona jornada</label>
                     </div>
                 </div>
             </div>  
