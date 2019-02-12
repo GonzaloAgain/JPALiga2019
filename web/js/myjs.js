@@ -11,6 +11,7 @@ function init(){
     $('#modal-listaApuestas').modal();
     $('#modal-apostar').modal();
     $('.modal-trigger').modal();
+    $('.sidenav').sidenav();
     apostar();
 }
 
