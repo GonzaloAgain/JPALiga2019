@@ -131,9 +131,11 @@ public class Controller extends HttpServlet {
             porra.setGoleslocal(goleslocal);
             porra.setGolesvisitante(golesvisitante);
             
-           /* em.getTransaction().begin();
+            System.out.println(partido.getFecha());
+            System.out.println(porra.getGoleslocal());
+            em.getTransaction().begin();
             em.persist(porra);
-            em.getTransaction().commit();*/
+            em.getTransaction().commit();
           
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
