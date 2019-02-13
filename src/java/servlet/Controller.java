@@ -51,7 +51,7 @@ public class Controller extends HttpServlet {
         String sql;
         Query query;
         EntityManager em = null;
-        Usuario user = null;
+        Usuario user;
         
         if (em == null) {
             em = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -76,7 +76,7 @@ public class Controller extends HttpServlet {
  //           jornada.getPartidoList();
             Short idjornadillu;
             String idjornada = (String) request.getParameter("idJornada");
-            if(idjornada==""){
+            if(idjornada.equals("")){
             idjornadillu = 0;
             }else{
             idjornadillu = Short.valueOf(idjornada);
@@ -117,8 +117,8 @@ public class Controller extends HttpServlet {
             
         } else if (op.equals("apostar")){  
             user = (Usuario) session.getAttribute("usuario");
-            String idpartido = request.getParameter("idPartido");
-            
+            user = em.find(Usuario.class, user.getDni());
+            String idpartido = request.getParameter("idPartido"); 
             Partido partido = em.find(Partido.class, Integer.valueOf(idpartido));
             short goleslocal = Short.valueOf(request.getParameter("gLocal"));
             short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
@@ -141,7 +141,8 @@ public class Controller extends HttpServlet {
         } else if (op.equals("infoapuestas")){
             int idpartido = Integer.valueOf(request.getParameter("idpartido"));
             
-            query = em.createQuery("select concat(p.goleslocal,' - ',p.golesvisitante,',',count(p)) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante");
+            sql = "select concat(p.goleslocal,' - ',p.golesvisitante,',',count(p)) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante"; 
+            query = em.createQuery(sql);
             query.setParameter("idpartido", idpartido);
             List<String> lista=query.getResultList();
             
