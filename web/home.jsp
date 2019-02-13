@@ -73,7 +73,7 @@
                          <% for(int i=0;i<jornadas.size();i++){ 
                          jornada = (Jornada)jornadas.get(i);
                          %>
-                         <option value="<%=jornada.getIdjornada() %>"><%=jornada.getNombre() %>(<%=jornada.getFechainicio() %> - <%=jornada.getFechafin() %>)</option>
+                         <option value="<%=jornada.getIdjornada() %>"><%=jornada.getNombre() %> (<%=jornada.getFechainicio() %> - <%=jornada.getFechafin() %>)</option>
                          <%}%>
                       </select>
                     </div>
@@ -128,11 +128,11 @@
                     <h4>Login & Register</h4>
                     <div class="row">
                       <div class="input-field col m12">
-                        <input id="dni" name="dni" type="text" class="validate">
+                          <input id="dni" name="dni" type="text" maxlength="9" class="validate" required>
                         <label for="dni" class="blue-text text-lighten-3">DNI</label>
                       </div>
                       <div class="input-field col m12">
-                        <input id="nombre" name="nombre" type="text" class="validate">
+                          <input id="nombre" name="nombre" type="text" class="validate" required>
                         <label for="nombre" class="blue-text text-lighten-3">Nombre</label>
                       </div>
                     </div>
@@ -166,11 +166,11 @@
               <h5 id="partido" class="center"></h5>
               <div class="row">
                 <div class="input-field col m6">
-                  <input id="gLocal" type="text" name="gLocal" class="validate">
+                    <input id="gLocal" type="number" name="gLocal" class="validate" required>
                   <label for="gLocal" class="blue-text text-lighten-3">Goles Local</label>
                 </div>
                 <div class="input-field col m6">
-                  <input id="gVisitante" type="text" name="gVisitante" class="validate">
+                    <input id="gVisitante" type="number" name="gVisitante" class="validate" required>
                   <label for="gVisitante" class="blue-text text-lighten-3">Goles Visitante</label>
                 </div>
                 <div>

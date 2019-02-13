@@ -5,7 +5,6 @@
  */
 package servlet;
 
-import entities.InfoApuesta;
 import entities.Jornada;
 import entities.Partido;
 import entities.Porra;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -104,9 +102,17 @@ public class Controller extends HttpServlet {
                 em.persist(nuevoUsuario);
                 em.getTransaction().commit();
                 user = nuevoUsuario;
+                
+                session.setAttribute("usuario", user);
+                
+            } else if (user.getNombre().equals(nombre)){
+                session.setAttribute("usuario", user);
+                
+            } else {
+                String msg = "Introduce un nombre de usuario válido";
+                request.setAttribute("msg", msg);
             }
             
-            session.setAttribute("usuario", user);
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
@@ -118,12 +124,12 @@ public class Controller extends HttpServlet {
         } else if (op.equals("apostar")){  
             user = (Usuario) session.getAttribute("usuario");
             user = em.find(Usuario.class, user.getDni());
-            String idpartido = request.getParameter("idPartido"); 
-            Partido partido = em.find(Partido.class, Integer.valueOf(idpartido));
+            int idpartido = Integer.valueOf(request.getParameter("idPartido")); 
+            Partido partido = em.find(Partido.class, idpartido);
             short goleslocal = Short.valueOf(request.getParameter("gLocal"));
             short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
             
-            PorraPK porraPK = new PorraPK(user.getDni(), Short.valueOf(idpartido));
+            PorraPK porraPK = new PorraPK(user.getDni(), idpartido);
             
             Porra porra = new Porra(porraPK);
             porra.setUsuario(user);
@@ -140,6 +146,8 @@ public class Controller extends HttpServlet {
             
         } else if (op.equals("infoapuestas")){
             int idpartido = Integer.valueOf(request.getParameter("idpartido"));
+            
+            System.out.println("partido: "+idpartido);
             
             sql = "select concat(p.goleslocal,' - ',p.golesvisitante,',',count(p)) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante"; 
             query = em.createQuery(sql);
