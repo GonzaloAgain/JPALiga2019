@@ -29,7 +29,7 @@
             List jornadas = (List) session.getAttribute("jornadas");
             Jornada jornada = null;
             String idjornadita =(String) session.getAttribute("idJornada");
-            
+            String restriccion = (String) request.getAttribute("msg");
 
         %>
         <div class="container">
@@ -139,7 +139,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="waves-effect waves-light btn"><i class="material-icons left">person</i>Login & Register</button>
-                    <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancelar</a>
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat"><i class="material-icons left">cancel</i>Cancelar</a>
                 </div>
             </form>
         </div>    
@@ -153,10 +153,9 @@
             </div>
           </div>
           <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">fullscreen_exit</i>Aceptar</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat"><i class="material-icons left">fullscreen_exit</i>Aceptar</a>
           </div>
         </div>
-
 
         <!-- Modal Apostar -->
         <div id="modal-apostar" class="modal">
@@ -174,13 +173,13 @@
                   <label for="gVisitante" class="blue-text text-lighten-3">Goles Visitante</label>
                 </div>
                 <div>
-                  <input type="hidden" id="idPartido" name="idPartido">
+                  <input type="text" id="idPartido" name="idPartido">
                 </div>
               </div>
             </div>
             <div class="modal-footer">
               <button class="waves-effect waves-light btn"><i class="material-icons left">person</i>Apostar</button>
-              <a href="#!" class="modal-close waves-effect waves-light btn"><i class="material-icons left">cancel</i>Cancelar</a>
+              <a href="#!" class="modal-close waves-effect waves-green btn-flat"><i class="material-icons left">cancel</i>Cancelar</a>
             </div>
           </form>
         </div> 
@@ -191,9 +190,16 @@
       <script type="text/javascript" src="js/myjs.js"></script>
       
       <% if(idjornadita!=null){ %>
-        <script type="text/javascript">
-            $('#selectjornada').val('<%= idjornadita %>')
-        </script>
-      <% } %>
+            <script type="text/javascript">
+                $('#selectjornada').val('<%= idjornadita %>')
+            </script>
+      <%} 
+        if(restriccion!=null){
+  System.out.println(restriccion);
+%>
+            <script type="text/javascript">
+                M.toast({html: '<%=restriccion%>', classes: 'rounded'});
+            </script>
+      <%}%>
     </body>
   </html>

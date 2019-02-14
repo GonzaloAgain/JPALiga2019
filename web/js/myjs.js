@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 //Funcion que inicializa
 function init(){
-    $('select').material_select();
+    $('select').formSelect();
     $('#modal-login').modal();
     $('#modal-listaApuestas').modal();
     $('#modal-apostar').modal();
@@ -17,7 +17,7 @@ function init(){
 //Funcion para cargar la tabla de apuestas mediante ajax
 function loadApuestas(){
     $('#modal-listaApuestas').modal({
-        ready: function(modal, trigger) {
+        onOpenEnd: function(modal, trigger) {
             $.ajax({
                 type: "POST",
                 url: "Controller?op=infoapuestas&idpartido=" + trigger.data('id'),
@@ -32,9 +32,9 @@ function loadApuestas(){
 //Funcion que mete los datos necesarios para hacer la apuesta
 function apostar(){
     $('#modal-apostar').modal({
-        ready: function(modal, trigger) {
-            modal.find('input[name="idPartido"]').val(trigger.data('id'));
-            modal.find('h5[id="partido"]').text(trigger.data('nom'));
+        onOpenEnd: function(e) {
+            //$("idPartido").val("hola");
+            $("#partido").text($(e.relatedTarget).data('nom'));
         }
     });
 }

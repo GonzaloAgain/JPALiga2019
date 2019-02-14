@@ -124,30 +124,41 @@ public class Controller extends HttpServlet {
         } else if (op.equals("apostar")){  
             user = (Usuario) session.getAttribute("usuario");
             user = em.find(Usuario.class, user.getDni());
+            
             int idpartido = Integer.valueOf(request.getParameter("idPartido")); 
-            Partido partido = em.find(Partido.class, idpartido);
-            short goleslocal = Short.valueOf(request.getParameter("gLocal"));
-            short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
             
-            PorraPK porraPK = new PorraPK(user.getDni(), idpartido);
+            sql="select p from Porra p where p.usuario.dni=:dni and p.partido.idpartido=:idpartido";
+            query = em.createQuery(sql);
+            query.setParameter("dni", user.getDni());
+            query.setParameter("idpartido", idpartido);
+            List<String> lista=query.getResultList();
             
-            Porra porra = new Porra(porraPK);
-            porra.setUsuario(user);
-            porra.setPartido(partido);
-            porra.setGoleslocal(goleslocal);
-            porra.setGolesvisitante(golesvisitante);
+            if(lista.isEmpty()){
+                Partido partido = em.find(Partido.class, idpartido);
+                short goleslocal = Short.valueOf(request.getParameter("gLocal"));
+                short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
+
+                PorraPK porraPK = new PorraPK(user.getDni(), idpartido);
+
+                Porra porra = new Porra(porraPK);
+                porra.setUsuario(user);
+                porra.setPartido(partido);
+                porra.setGoleslocal(goleslocal);
+                porra.setGolesvisitante(golesvisitante);
+
+                em.getTransaction().begin();
+                em.persist(porra);
+                em.getTransaction().commit();
+            }else{
+                String msg = "Solo puedes apostar una vez en cada partido";
+                request.setAttribute("msg", msg);
+            }
             
-            em.getTransaction().begin();
-            em.persist(porra);
-            em.getTransaction().commit();
-          
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
         } else if (op.equals("infoapuestas")){
             int idpartido = Integer.valueOf(request.getParameter("idpartido"));
-            
-            System.out.println("partido: "+idpartido);
             
             sql = "select concat(p.goleslocal,' - ',p.golesvisitante,',',count(p)) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante"; 
             query = em.createQuery(sql);
