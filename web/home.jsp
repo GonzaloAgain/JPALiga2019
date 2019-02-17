@@ -106,7 +106,7 @@
                                     partido = (Partido)partidos.get(i);
                                 %>
                                     <tr>
-                                      <td><button id="boton-apuestas" data-target="modal-listaApuestas" data-id="<%=partido.getIdpartido()%>" class="btn modal-trigger"><i class="small material-icons">info</i></button></td>
+                                      <td><button data-target="modal-listaApuestas" data-id="<%=partido.getIdpartido()%>" class="btn modal-trigger"><i class="small material-icons">info</i></button></td>
                                       <td><img src="<%=partido.getLocal().getEscudo() %>"/></td>
                                       <td><h5><%=partido.getLocal().getNombre() %></h5></td>
                                       <td><h6><%=partido.getGoleslocal() %> - <%=partido.getGolesvisitante() %></h6></td>
@@ -173,7 +173,7 @@
                   <label for="gVisitante" class="blue-text text-lighten-3">Goles Visitante</label>
                 </div>
                 <div>
-                  <input type="text" id="idPartido" name="idPartido">
+                  <input type="hidden" id="idPartido" name="idPartido">
                 </div>
               </div>
             </div>

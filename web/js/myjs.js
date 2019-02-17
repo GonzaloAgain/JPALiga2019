@@ -10,6 +10,7 @@ function init(){
     $('#modal-listaApuestas').modal();
     $('#modal-apostar').modal();
     $('.modal-trigger').modal();
+    $('.sidenav').sidenav();
     apostar();
     loadApuestas();
 }
@@ -17,7 +18,7 @@ function init(){
 //Funcion para cargar la tabla de apuestas mediante ajax
 function loadApuestas(){
     $('#modal-listaApuestas').modal({
-        onOpenEnd: function(modal, trigger) {
+        onOpenStart: function() {
             $.ajax({
                 type: "POST",
                 url: "Controller?op=infoapuestas&idpartido=" + trigger.data('id'),
@@ -32,9 +33,9 @@ function loadApuestas(){
 //Funcion que mete los datos necesarios para hacer la apuesta
 function apostar(){
     $('#modal-apostar').modal({
-        onOpenEnd: function(e) {
-            //$("idPartido").val("hola");
-            $("#partido").text($(e.relatedTarget).data('nom'));
+        onOpenStart: function(modal, trigger) {
+            $("idPartido").val();
+            $("#partido").text();
         }
     });
 }
