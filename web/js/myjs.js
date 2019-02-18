@@ -18,10 +18,11 @@ function init(){
 //Funcion para cargar la tabla de apuestas mediante ajax
 function loadApuestas(){
     $('#modal-listaApuestas').modal({
-        onOpenStart: function() {
+        onOpenStart: function(modal, trigger) {
+            var myobj = $(trigger);
             $.ajax({
                 type: "POST",
-                url: "Controller?op=infoapuestas&idpartido=" + trigger.data('id'),
+                url: "Controller?op=infoapuestas&idpartido=" + myobj.data('id'),
                 success: function (info) {
                     $("#div-apuestas").html(info);
                 }
@@ -33,9 +34,10 @@ function loadApuestas(){
 //Funcion que mete los datos necesarios para hacer la apuesta
 function apostar(){
     $('#modal-apostar').modal({
-        onOpenStart: function(modal, trigger) {
-            $("idPartido").val();
-            $("#partido").text();
+        onOpenEnd: function(modal, trigger) {
+            var myobj = $(trigger);
+            $("#idPartido").val(myobj.data('id'));
+            $("#partido").text(myobj.data('nom'));
         }
     });
 }
