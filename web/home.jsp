@@ -47,7 +47,7 @@
                     } else {
                  %>
                         <li><h5>Hola, <%=user.getNombre()%> </h5></li>
-                        <li><a href="Controller?op=logout" class="waves-effect waves-light btn"><i class="material-icons left">exit_to_app</i>Log Out</a></li>
+                        <li><a href="Controller?op=logout" class="waves-effect waves-light btn"><i class="material-icons left">exit_to_app</i>Logout</a></li>
                 <%  }   %>  
                 </ul>
               </div>

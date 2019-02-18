@@ -50,6 +50,7 @@ public class Controller extends HttpServlet {
         Query query;
         EntityManager em = null;
         Usuario user;
+        String msg;
         
         if (em == null) {
             em = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -69,9 +70,7 @@ public class Controller extends HttpServlet {
             
         }else if(op.equals("jornada")){
             sql = "select p from Partido p where p.idjornada.idjornada = :idJornada";
-            
- //           Jornada jornada = em.find(Jornada.class, idjornada);           
- //           jornada.getPartidoList();
+
             Short idjornadillu;
             String idjornada = (String) request.getParameter("idJornada");
             if(idjornada.equals("")){
@@ -87,10 +86,8 @@ public class Controller extends HttpServlet {
             
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
-        }       
-
-        
-        if (op.equals("login")) {
+            
+        } else if (op.equals("login")) {
             String nombre = (String) request.getParameter("nombre");
             String dni = (String) request.getParameter("dni"); 
             user = em.find(Usuario.class, dni);
@@ -103,13 +100,17 @@ public class Controller extends HttpServlet {
                 em.getTransaction().commit();
                 user = nuevoUsuario;
                 
+                msg = "Usuario creado correctamente";
+                request.setAttribute("msg", msg);
                 session.setAttribute("usuario", user);
                 
             } else if (user.getNombre().equals(nombre)){
+                msg = "Bienvenido "+user.getNombre();
+                request.setAttribute("msg", msg);
                 session.setAttribute("usuario", user);
                 
             } else {
-                String msg = "Introduce un nombre de usuario válido";
+                msg = "Introduce un nombre de usuario válido";
                 request.setAttribute("msg", msg);
             }
             
@@ -150,7 +151,7 @@ public class Controller extends HttpServlet {
                 em.persist(porra);
                 em.getTransaction().commit();
             }else{
-                String msg = "Solo puedes apostar una vez en cada partido";
+                msg = "Solo puedes apostar una vez en cada partido";
                 request.setAttribute("msg", msg);
             }
             
