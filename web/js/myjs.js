@@ -18,7 +18,7 @@ function init(){
 //Funcion para cargar la tabla de apuestas mediante ajax
 function loadApuestas(){
     $('#modal-listaApuestas').modal({
-        onOpenStart: function(modal, trigger) {
+        onOpenEnd: function(modal, trigger) {
             var myobj = $(trigger);
             $.ajax({
                 type: "POST",
