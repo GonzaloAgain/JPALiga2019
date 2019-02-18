@@ -17,3 +17,17 @@
 #tituloApuestas{
     padding: 5px 0px;
 }
+
+table img{
+    height:100px;
+    width:100px;
+}
+#toast-container{
+    top: auto !important;
+    bottom: 10%;
+    right: 40%;
+}
+
+.separacionlateral{
+    margin-left: 1em;
+}
