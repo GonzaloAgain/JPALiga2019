@@ -57,17 +57,19 @@
                 <% 
                     if (user == null){
                 %>
-                      <li><button data-target="modal-login" class="btn modal-trigger">Login</button></li> 
+                      <li><a class="waves-effect waves-light btn modal-trigger" data-target="modal-login" class="btn modal-trigger">Login</a></li> 
                 <%
                     } else {
                 %>
-                       <li><h5>Hola, <%=user.getNombre()%> </h5></li>
+                      <li class="separacionlateral"><h5>Hola, <%=user.getNombre()%> </h5></li>
                        <li><a href="Controller?op=logout" class="waves-effect waves-light btn"><i class="material-icons left">exit_to_app</i>Log Out</a></li>
                 <%  }   %>  
-            </ul>                  
+            </ul> 
+            
+            
             <div class="container">
                 <div class="row">
-                    <div class="input-field col s8 offset-s2">
+                    <div class="input-field col s12 m8 offset-m2">
                         <select id="selectjornada" onchange='window.location="Controller?op=jornada&idJornada="+this.value'>
                         <option value="" selected>Selecciona una jornada</option>
                          <% for(int i=0;i<jornadas.size();i++){ 
