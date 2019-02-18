@@ -49,7 +49,7 @@ public class Controller extends HttpServlet {
         String sql;
         Query query;
         EntityManager em = null;
-        Usuario user = null;
+        Usuario user;
         
         if (em == null) {
             em = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -59,22 +59,31 @@ public class Controller extends HttpServlet {
         op = request.getParameter("op");
         
         if (op.equals("inicio")) {
-            sql = "select j.nombre,j.fechainicio,j.fechafin from Jornada j";
+            sql = "select j from Jornada j";
             query = em.createQuery(sql);
-            List jornadas = query.getResultList();           
+            List<Jornada> jornadas = query.getResultList();           
             session.setAttribute("jornadas",jornadas);
             
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
         }else if(op.equals("jornada")){
-            sql = "select p from Partido p where p.idjornada.idjornada";
+            sql = "select p from Partido p where p.idjornada.idjornada = :idJornada";
+            
  //           Jornada jornada = em.find(Jornada.class, idjornada);           
  //           jornada.getPartidoList();
-            
+            Short idjornadillu;
+            String idjornada = (String) request.getParameter("idJornada");
+            if(idjornada.equals("")){
+            idjornadillu = 0;
+            }else{
+            idjornadillu = Short.valueOf(idjornada);
+            }
             query = em.createQuery(sql);
-            List partidos = query.getResultList();                       
+            query.setParameter("idJornada",idjornadillu );
+            List <Partido> partidos = query.getResultList();                       
             session.setAttribute("partidos",partidos);
+            session.setAttribute("idJornada",idjornada);
             
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
@@ -89,11 +98,21 @@ public class Controller extends HttpServlet {
             if (user == null){
                 Usuario nuevoUsuario = new Usuario(dni);
                 nuevoUsuario.setNombre(nombre);
+                em.getTransaction().begin();
                 em.persist(nuevoUsuario);
+                em.getTransaction().commit();
                 user = nuevoUsuario;
+                
+                session.setAttribute("usuario", user);
+                
+            } else if (user.getNombre().equals(nombre)){
+                session.setAttribute("usuario", user);
+                
+            } else {
+                String msg = "Introduce un nombre de usuario válido";
+                request.setAttribute("msg", msg);
             }
             
-            session.setAttribute("usuario", user);
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
@@ -104,26 +123,97 @@ public class Controller extends HttpServlet {
             
         } else if (op.equals("apostar")){  
             user = (Usuario) session.getAttribute("usuario");
-            short idpartido = Short.valueOf(request.getParameter("idPartido"));
-            Partido partido = em.find(Partido.class, idpartido);
-            short goleslocal = Short.valueOf(request.getParameter("gLocal"));
-            short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
+            user = em.find(Usuario.class, user.getDni());
             
-            PorraPK porraPK = new PorraPK(user.getDni(),idpartido);
-            em.persist(porraPK);
+            int idpartido = Integer.valueOf(request.getParameter("idPartido")); 
             
-            Porra porra = new Porra(porraPK);
-            porra.setUsuario(user);
-            porra.setPartido(partido);
-            porra.setGoleslocal(goleslocal);
-            porra.setGolesvisitante(golesvisitante);
-            em.persist(porra);
+            sql="select p from Porra p where p.usuario.dni=:dni and p.partido.idpartido=:idpartido";
+            query = em.createQuery(sql);
+            query.setParameter("dni", user.getDni());
+            query.setParameter("idpartido", idpartido);
+            List<String> lista=query.getResultList();
+            
+            if(lista.isEmpty()){
+                Partido partido = em.find(Partido.class, idpartido);
+                short goleslocal = Short.valueOf(request.getParameter("gLocal"));
+                short golesvisitante = Short.valueOf(request.getParameter("gVisitante"));
+
+                PorraPK porraPK = new PorraPK(user.getDni(), idpartido);
+
+                Porra porra = new Porra(porraPK);
+                porra.setUsuario(user);
+                porra.setPartido(partido);
+                porra.setGoleslocal(goleslocal);
+                porra.setGolesvisitante(golesvisitante);
+
+                em.getTransaction().begin();
+                em.persist(porra);
+                em.getTransaction().commit();
+            }else{
+                String msg = "Solo puedes apostar una vez en cada partido";
+                request.setAttribute("msg", msg);
+            }
             
             dispatcher = request.getRequestDispatcher("home.jsp");
             dispatcher.forward(request, response);
             
         } else if (op.equals("infoapuestas")){
+            int idpartido = Integer.valueOf(request.getParameter("idpartido"));
             
-        }
+            sql = "select concat(p.goleslocal,' - ',p.golesvisitante,',',count(p)) from Porra p where p.partido.idpartido = :idpartido group by p.goleslocal,p.golesvisitante"; 
+            query = em.createQuery(sql);
+            query.setParameter("idpartido", idpartido);
+            List<String> lista=query.getResultList();
+            
+            Partido partido = em.find(Partido.class, idpartido);
+            String nombrepartido = partido.getLocal().getNombre() + " - " + partido.getVisitante().getNombre();
+            
+            request.setAttribute("infoapuestas", lista);
+            request.setAttribute("nombrepartido", nombrepartido);
+            
+            dispatcher = request.getRequestDispatcher("apuestas.jsp");
+            dispatcher.forward(request, response);
+        } 
+        
     }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

@@ -3,40 +3,43 @@ $(document).ready(function() {
     init();
 });
 
+//Funcion que inicializa
 function init(){
-    loadApuestas()
+    $('select').formSelect();
     $('#modal-login').modal();
     $('#modal-listaApuestas').modal();
     $('#modal-apostar').modal();
     $('.modal-trigger').modal();
-    apostar()
+    $('.sidenav').sidenav();
+    apostar();
+    loadApuestas();
 }
 
+//Funcion para cargar la tabla de apuestas mediante ajax
 function loadApuestas(){
-    $('#modal-listaApuestas').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var idPartido = button.data('id');
-        $.ajax({
-            type: "POST",
-            url: "Controller?op=infoapuestas&idpartido=" + idPartido,
-            success: function (info) {
-                $("#div-apuestas").html(info);
-            }
-        });
+    $('#modal-listaApuestas').modal({
+        onOpenEnd: function(modal, trigger) {
+            var myobj = $(trigger);
+            $.ajax({
+                type: "POST",
+                url: "Controller?op=infoapuestas&idpartido=" + myobj.data('id'),
+                success: function (info) {
+                    $("#div-apuestas").html(info);
+                }
+            });
+        }
     });
 }
 
+//Funcion que mete los datos necesarios para hacer la apuesta
 function apostar(){
-    $('#modal-apostar').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var idpartido = button.data('id')
-        var partido=button.data('whatever')// Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('#idPartido').val(idpartido)
-        modal.find('#partido').val(partido)
-      })
+    $('#modal-apostar').modal({
+        onOpenEnd: function(modal, trigger) {
+            var myobj = $(trigger);
+            $("#idPartido").val(myobj.data('id'));
+            $("#partido").text(myobj.data('nom'));
+        }
+    });
 }
 
 
