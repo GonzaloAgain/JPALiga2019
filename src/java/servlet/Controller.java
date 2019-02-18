@@ -150,6 +150,9 @@ public class Controller extends HttpServlet {
                 em.getTransaction().begin();
                 em.persist(porra);
                 em.getTransaction().commit();
+                
+                msg = "Apuesta realizada";
+                request.setAttribute("msg", msg);
             }else{
                 msg = "Solo puedes apostar una vez en cada partido";
                 request.setAttribute("msg", msg);
